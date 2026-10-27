@@ -1,0 +1,1353 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exercices E32 – Protection du consommateur</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Inter:wght@300;400;500;600&display=swap');
+/* ── RESET & BASE ─────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:        #f4f6fa;
+  --surface:   #ffffff;
+  --card:      #ffffff;
+  --border:    #dde2ec;
+  --border-hi: #b9c1d6;
+  --text:      #1f2433;
+  --text-dim:  #5f6780;
+  --accent:    #c4870f;
+  --green:     #1f8a46;
+  --red:       #c93636;
+  --blue:      #2f6fb3;
+  --purple:    #7448b0;
+  --font-head: 'Syne', sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --radius:    10px;
+}
+
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.7;
+  min-height: 100vh;
+}
+
+/* ── HEADER ──────────────────────────────────────────────── */
+.site-header {
+  background: linear-gradient(135deg, #ffffff 0%, #eef2f9 100%);
+  border-bottom: 1px solid var(--border);
+  padding: 48px 24px 36px;
+  text-align: center;
+}
+.site-header .kicker {
+  display: inline-block;
+  background: var(--accent);
+  color: #ffffff;
+  font-family: var(--font-head);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  padding: 3px 12px;
+  border-radius: 3px;
+  margin-bottom: 18px;
+}
+.site-header h1 {
+  font-family: var(--font-head);
+  font-size: clamp(22px, 5vw, 38px);
+  font-weight: 800;
+  color: var(--text);
+  margin-bottom: 8px;
+  line-height: 1.15;
+}
+.site-header .sub {
+  color: var(--text-dim);
+  font-size: 14px;
+  font-weight: 300;
+  max-width: 520px;
+  margin: 0 auto 24px;
+}
+
+/* ── NAV ANCRES ──────────────────────────────────────────── */
+.nav-anchors {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.nav-anchors a {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 500;
+  padding: 7px 16px;
+  text-decoration: none;
+  transition: border-color .15s, color .15s;
+}
+.nav-anchors a:hover { border-color: var(--accent); color: var(--accent); }
+
+/* ── CONTENEUR PRINCIPAL ─────────────────────────────────── */
+main {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 40px 20px 80px;
+}
+
+/* ── TITRE DE BLOC ───────────────────────────────────────── */
+.bloc-titre {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 52px 0 6px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--border);
+}
+.bloc-titre:first-child { margin-top: 0; }
+.bloc-titre .icone {
+  font-size: 26px;
+  flex-shrink: 0;
+}
+.bloc-titre h2 {
+  font-family: var(--font-head);
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--text);
+}
+
+/* ── MÉMO FORMULE ────────────────────────────────────────── */
+.memo {
+  background: #eef8f1;
+  border: 1px solid #c5e6cf;
+  border-left: 4px solid var(--green);
+  border-radius: var(--radius);
+  padding: 16px 20px;
+  margin-bottom: 24px;
+  font-size: 13.5px;
+  line-height: 1.75;
+}
+.memo .memo-titre {
+  font-family: var(--font-head);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--green);
+  margin-bottom: 8px;
+}
+.memo code {
+  display: block;
+  background: #e2f2e7;
+  border-radius: 5px;
+  padding: 8px 14px;
+  color: #17633a;
+  font-family: 'Courier New', monospace;
+  font-size: 13px;
+  margin: 4px 0;
+}
+.memo .note {
+  color: var(--text-dim);
+  font-size: 12.5px;
+  margin-top: 6px;
+}
+
+/* ── CARTE EXERCICE ──────────────────────────────────────── */
+.exo-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  margin-bottom: 14px;
+  overflow: hidden;
+  transition: border-color .15s;
+}
+.exo-card:hover { border-color: var(--border-hi); }
+
+.exo-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 18px;
+  cursor: pointer;
+  user-select: none;
+  list-style: none;
+}
+.exo-header::-webkit-details-marker { display: none; }
+
+.exo-num {
+  font-family: var(--font-head);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-dim);
+  flex-shrink: 0;
+  min-width: 40px;
+}
+.badge {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 2px 9px;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+.badge-1 { background: #e6f5eb; color: var(--green); border: 1px solid #b7e0c4; }
+.badge-2 { background: #fdf4dd; color: var(--accent); border: 1px solid #ecd28c; }
+.badge-3 { background: #fbe9e9; color: var(--red); border: 1px solid #efc0c0; }
+.badge-exam { background: #f2ebfa; color: var(--purple); border: 1px solid #d6c3ee; }
+
+.exo-titre-txt {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text);
+  flex: 1;
+}
+.chevron {
+  color: var(--text-dim);
+  font-size: 13px;
+  flex-shrink: 0;
+  transition: transform .2s;
+}
+details[open] .chevron { transform: rotate(180deg); }
+
+/* ── CORPS DE L'EXERCICE ─────────────────────────────────── */
+.exo-body {
+  padding: 0 18px 20px;
+  border-top: 1px solid var(--border);
+}
+
+.contexte {
+  background: #eef4fb;
+  border-left: 3px solid var(--blue);
+  border-radius: 0 6px 6px 0;
+  padding: 14px 18px;
+  margin: 16px 0;
+  font-size: 14px;
+  line-height: 1.75;
+}
+.contexte strong { color: var(--text); }
+
+.tableau-donnees {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  margin: 12px 0;
+}
+.tableau-donnees th {
+  background: #eef1f7;
+  color: var(--text-dim);
+  font-family: var(--font-head);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 8px 12px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+.tableau-donnees td {
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text);
+}
+.tableau-donnees tr:last-child td { border-bottom: none; }
+.tableau-donnees td.num { font-weight: 600; color: var(--text); }
+.tableau-donnees tr.total-row td {
+  background: #eef1f7;
+  font-family: var(--font-head);
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.questions { margin: 18px 0 0; }
+.question {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+  align-items: flex-start;
+}
+.question .q-num {
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  background: var(--accent);
+  color: #ffffff;
+  font-family: var(--font-head);
+  font-weight: 800;
+  font-size: 11px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2px;
+}
+.question p { font-size: 14px; margin: 0; }
+
+/* ── ORDRE DE GRANDEUR ───────────────────────────────────── */
+.ordre-grandeur {
+  background: #fff8e3;
+  border: 1px solid #f0dca0;
+  border-radius: 6px;
+  padding: 10px 14px;
+  font-size: 12.5px;
+  color: #7a5a08;
+  margin: 12px 0 0;
+}
+.ordre-grandeur::before { content: "💡 "; }
+
+/* ── BOUTON CORRECTION ───────────────────────────────────── */
+.btn-corrige {
+  background: none;
+  border: 1px solid var(--border-hi);
+  border-radius: 6px;
+  color: var(--text-dim);
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 500;
+  padding: 8px 16px;
+  margin-top: 18px;
+  transition: all .15s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.btn-corrige:hover { border-color: var(--green); color: var(--green); }
+
+/* ── CORRECTION ──────────────────────────────────────────── */
+.correction {
+  display: none;
+  background: #eef8f1;
+  border: 1px solid #c5e6cf;
+  border-radius: 6px;
+  padding: 16px 18px;
+  margin-top: 14px;
+  font-size: 13.5px;
+  line-height: 1.8;
+}
+.correction.visible { display: block; }
+.correction .corr-etape {
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #d3ead9;
+}
+.correction .corr-etape:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
+.correction .c-num {
+  display: inline-block;
+  background: var(--green);
+  color: #eef8f1;
+  font-family: var(--font-head);
+  font-weight: 800;
+  font-size: 10px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 18px;
+  margin-right: 6px;
+}
+.correction code {
+  display: block;
+  background: #e2f2e7;
+  border-radius: 4px;
+  padding: 6px 12px;
+  color: #17633a;
+  font-family: 'Courier New', monospace;
+  font-size: 13px;
+  margin: 5px 0;
+}
+.correction .res {
+  font-family: var(--font-head);
+  font-weight: 700;
+  color: var(--text);
+}
+.correction .conclu {
+  margin-top: 8px;
+  font-size: 13px;
+  color: #2c5e3c;
+  font-style: italic;
+}
+.correction .tableau-corr {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12.5px;
+  margin: 8px 0;
+}
+.correction .tableau-corr th {
+  background: #e2f2e7;
+  color: var(--text-dim);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 6px 10px;
+  text-align: left;
+}
+.correction .tableau-corr td {
+  padding: 6px 10px;
+  border-bottom: 1px solid #d3ead9;
+  color: #2a4a34;
+}
+.correction .tableau-corr td.val {
+  font-weight: 700;
+  color: var(--green);
+}
+.correction .tableau-corr tr.t-total td {
+  background: #e2f2e7;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+/* ── SÉPARATEUR ──────────────────────────────────────────── */
+hr.section-sep {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 54px 0 0;
+}
+
+/* ── FOOTER ──────────────────────────────────────────────── */
+.site-footer {
+  border-top: 1px solid var(--border);
+  padding: 28px 20px;
+  text-align: center;
+  color: var(--text-dim);
+  font-size: 12px;
+}
+
+/* ── RESPONSIVE ──────────────────────────────────────────── */
+@media (max-width: 520px) {
+  .exo-titre-txt { font-size: 13px; }
+  .contexte { font-size: 13px; }
+  .tableau-donnees { font-size: 12px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ══ HEADER ══════════════════════════════════════════════ -->
+<header class="site-header">
+  <div class="kicker">⚖️ Exercices E32 – Bac pro MCV</div>
+  <h1>Respecter la réglementation<br>sur la protection du consommateur</h1>
+  <p class="sub">15 exercices progressifs – obligation d'information, droit de rétractation, garanties et litiges</p>
+  <nav class="nav-anchors">
+    <a href="#information">ℹ️ Information et conseil (4 ex.)</a>
+    <a href="#retractation">↩️ Droit de rétractation (5 ex.)</a>
+    <a href="#garanties">🛡️ Garanties et litiges (6 ex.)</a>
+  </nav>
+</header>
+
+<main>
+
+<!-- ══════════════════════════════════════════════════════════
+     BLOC 1 – OBLIGATION D'INFORMATION ET DE CONSEIL
+══════════════════════════════════════════════════════════ -->
+<div class="bloc-titre" id="information">
+  <span class="icone">ℹ️</span>
+  <h2>Bloc 1 – Mettre en œuvre l'obligation d'information et de conseil</h2>
+</div>
+
+<div class="memo">
+  <div class="memo-titre">🗂 mémo</div>
+  <code>Obligation d'information = dire au client tout ce qu'il doit savoir</code>
+  <code>Obligation de conseil = l'orienter vers la solution la plus adaptée à son besoin</code>
+  <p class="note">L'information peut porter sur&nbsp;: le motif d'indisponibilité, le prix, les caractéristiques techniques, les offres promotionnelles, les facilités de paiement, les modalités de mise à disposition (livraison, retrait). Elle s'applique à <strong>toutes les ventes</strong> (magasin, internet, téléphone, salon). Elle existe pour compenser l'<strong>asymétrie d'information</strong>&nbsp;: le vendeur en sait plus que le client.</p>
+</div>
+
+<!-- EX 1 -->
+<details class="exo-card">
+  <summary class="exo-header">
+    <span class="exo-num">Ex. 1</span>
+    <span class="badge badge-1">⬆ décollage</span>
+    <span class="exo-titre-txt">Information ou conseil&nbsp;? Classer des éléments de réponse</span>
+    <span class="chevron">▼</span>
+  </summary>
+  <div class="exo-body">
+    <div class="contexte">
+      Vous êtes téléconseiller au service retours et réclamations de <strong>Connect Home</strong>, enseigne spécialisée en électroménager, son et informatique (magasins + site internet). Une cliente souhaite acheter un réfrigérateur repéré sur le site, mais il n'est plus disponible. Voici six éléments de la réponse écrite qui lui a été envoyée&nbsp;:<br><br>
+      a) «&nbsp;Ce modèle était une fin de série, les cent produits ont été vendus.&nbsp;»<br>
+      b) «&nbsp;Ce modèle de remplacement est classé A++, une catégorie de plus que celui que vous aviez repéré.&nbsp;»<br>
+      c) «&nbsp;Il vous est proposé à 569 € au lieu de 789 € jusqu'au 1<sup>er</sup> décembre.&nbsp;»<br>
+      d) «&nbsp;Comme vous êtes sans réfrigérateur, je vous recommande le retrait en magasin sous une heure plutôt que la livraison dans huit jours.&nbsp;»<br>
+      e) «&nbsp;Le paiement en deux fois sans frais vous permettrait d'étaler la dépense, ce qui semble adapté à votre situation.&nbsp;»<br>
+      f) «&nbsp;Volume total&nbsp;: 367 litres, dont 269 litres pour le réfrigérateur et 98 litres pour le congélateur.&nbsp;»
+    </div>
+    <div class="questions">
+      <div class="question">
+        <span class="q-num">1</span>
+        <p>Classez chaque élément (a à f) dans l'obligation d'information ou dans l'obligation de conseil.</p>
+      </div>
+      <div class="question">
+        <span class="q-num">2</span>
+        <p>Pour chaque élément d'information, précisez sur quoi il porte (motif d'indisponibilité, prix, caractéristiques techniques, offre promotionnelle…).</p>
+      </div>
+    </div>
+    <div class="ordre-grandeur"><strong>Repère&nbsp;:</strong> un élément relève du conseil lorsque le vendeur <em>recommande</em> une solution en tenant compte de la situation personnelle du client («&nbsp;je vous recommande&nbsp;», «&nbsp;adapté à votre situation&nbsp;»).</div>
+    <button class="btn-corrige" onclick="toggleCorr(this)">✅ Voir la correction</button>
+    <div class="correction">
+      <div class="corr-etape">
+        <span class="c-num">1</span>
+        <table class="tableau-corr">
+          <thead><tr><th>Élément</th><th>Obligation</th><th>Porte sur</th></tr></thead>
+          <tbody>
+            <tr><td>a</td><td class="val">Information</td><td>Motif de l'indisponibilité</td></tr>
+            <tr><td>b</td><td class="val">Information</td><td>Caractéristiques techniques (consommation énergétique)</td></tr>
+            <tr><td>c</td><td class="val">Information</td><td>Prix de référence et offre promotionnelle</td></tr>
+            <tr><td>d</td><td class="val">Conseil</td><td>Modalités de mise à disposition adaptées à l'urgence</td></tr>
+            <tr><td>e</td><td class="val">Conseil</td><td>Facilités de paiement adaptées au client</td></tr>
+            <tr><td>f</td><td class="val">Information</td><td>Caractéristiques techniques (volumes)</td></tr>
+          </tbody>
+        </table>
+        <p class="conclu">L'information décrit l'offre de façon objective&nbsp;; le conseil oriente le client vers la solution la plus adaptée à son besoin.</p>
+      </div>
+    </div>
+  </div>
+</details>
+
+<!-- EX 2 -->
+<details class="exo-card">
+  <summary class="exo-header">
+    <span class="exo-num">Ex. 2</span>
+    <span class="badge badge-1">⬆ décollage</span>
+    <span class="exo-titre-txt">Pourquoi la loi impose-t-elle une obligation d'information&nbsp;?</span>
+    <span class="chevron">▼</span>
+  </summary>
+  <div class="exo-body">
+    <div class="contexte">
+      Un vendeur connaît précisément les produits qu'il vend&nbsp;: composition, performances, défauts fréquents, prix de la concurrence, date de fin de série… Le client, lui, ne dispose souvent que de la fiche produit et de ce que le vendeur veut bien lui dire. Ce déséquilibre s'appelle l'<strong>asymétrie d'information</strong>.<br><br>
+      Le code de la consommation impose au professionnel de communiquer au consommateur, avant la vente, les caractéristiques essentielles du produit, son prix, les conditions de livraison et les garanties.
+    </div>
+    <div class="questions">
+      <div class="question">
+        <span class="q-num">1</span>
+        <p>Expliquez avec vos mots ce qu'est l'asymétrie d'information.</p>
+      </div>
+      <div class="question">
+        <span class="q-num">2</span>
+        <p>Expliquez pourquoi la loi impose au vendeur une obligation d'information et de conseil.</p>
+      </div>
+      <div class="question">
+        <span class="q-num">3</span>
+        <p>Indiquez deux avantages, pour l'entreprise, du respect de cette obligation.</p>
+      </div>
+      <div class="question">
+        <span class="q-num">4</span>
+        <p>Vrai ou faux&nbsp;: «&nbsp;L'obligation d'information et de conseil s'applique uniquement aux achats à distance.&nbsp;» Justifiez.</p>
+      </div>
+    </div>
+    <div class="ordre-grandeur"><strong>Repère&nbsp;:</strong> pensez au «&nbsp;consentement libre et éclairé&nbsp;» du client&nbsp;: peut-il vraiment choisir s'il lui manque des informations&nbsp;?</div>
+    <button class="btn-corrige" onclick="toggleCorr(this)">✅ Voir la correction</button>
+    <div class="correction">
+      <div class="corr-etape">
+        <span class="c-num">1</span>
+        <p>L'asymétrie d'information est un <span class="res">déséquilibre d'information</span> entre le vendeur, qui connaît bien le produit, et le consommateur, qui en sait moins.</p>
+      </div>
+      <div class="corr-etape">
+        <span class="c-num">2</span>
+        <p>Le consommateur doit pouvoir donner un <span class="res">consentement libre et éclairé</span>. La loi le protège contre un vendeur qui pourrait lui cacher des informations pour conclure la vente. L'obligation d'information rétablit l'équilibre entre les deux parties.</p>
+      </div>
+      <div class="corr-etape">
+        <span class="c-num">3</span>
+        <p>Exemples&nbsp;: professionnalisme et bonne image de l'enseigne&nbsp;; confiance du client, qui reviendra (fidélisation)&nbsp;; moins de retours et de réclamations&nbsp;; respect de la loi (pas de sanction).</p>
+      </div>
+      <div class="corr-etape">
+        <span class="c-num">4</span>
+        <p class="res">Faux.</p>
+        <p class="conclu">L'obligation s'applique à toutes les ventes entre un professionnel et un consommateur&nbsp;: en magasin, à distance, sur un salon.</p>
+      </div>
+    </div>
+  </div>
+</details>
+
+<!-- EX 3 -->
+<details class="exo-card">
+  <summary class="exo-header">
+    <span class="exo-num">Ex. 3</span>
+    <span class="badge badge-2">⬆⬆ intermédiaire</span>
+    <span class="exo-titre-txt">Produit indisponible – calculer et présenter l'offre de remplacement</span>
+    <span class="chevron">▼</span>
+  </summary>
+  <div class="exo-body">
+    <div class="contexte">
+      Mme Duband, cliente de <strong>Connect Home</strong>, souhaitait commander un réfrigérateur à <strong>499 €</strong> repéré sur le site. Ce modèle est épuisé. Le service client lui propose un réfrigérateur Samsung de remplacement aux caractéristiques proches.
+    </div>
+    <table class="tableau-donnees">
+      <thead><tr><th>Élément</th><th>Donnée</th></tr></thead>
+      <tbody>
+        <tr><td>Prix de référence du modèle de remplacement</td><td class="num">789 € TTC</td></tr>
+        <tr><td>Prix promotionnel (jusqu'au 1<sup>er</sup> décembre)</td><td class="num">569 € TTC</td></tr>
+        <tr><td>Code promo CONNECT30 (valable ce jour)</td><td class="num">30 € en carte-cadeau par tranche de 200 € d'achat</td></tr>
+        <tr><td>Durée de validité de la carte-cadeau</td><td class="num">1 an</td></tr>
+        <tr><td>Facilité de paiement</td><td class="num">2 fois sans frais</td></tr>
+      </tbody>
+    </table>
+    <div class="questions">
+      <div class="question">
+        <span class="q-num">1</span>
+        <p>Calculez le montant de la réduction en euros, puis le taux de réduction (arrondi à 0,1 %).</p>
+      </div>
+      <div class="question">
+        <span class="q-num">2</span>
+        <p>Calculez le montant de la carte-cadeau obtenue avec le code CONNECT30.</p>
+      </div>
+      <div class="question">
+        <span class="q-num">3</span>
+        <p>Calculez le montant de chaque mensualité en cas de paiement en deux fois sans frais.</p>
+      </div>
+      <div class="question">
+        <span class="q-num">4</span>
+        <p>Calculez l'écart de prix entre le modèle initialement repéré et le modèle proposé (prix promotionnel). Expliquez pourquoi le vendeur doit annoncer le prix de référence <strong>et</strong> le prix promotionnel.</p>
+      </div>
+    </div>
+    <div class="ordre-grandeur"><strong>Ordre de grandeur&nbsp;:</strong> la réduction dépasse 200 €, soit un peu plus d'un quart du prix de référence. 569 € contient deux tranches complètes de 200 €.</div>
+    <button class="btn-corrige" onclick="toggleCorr(this)">✅ Voir la correction</button>
+    <div class="correction">
+      <div class="corr-etape">
+        <span class="c-num">1</span>
+        <code>789 – 569 = 220 €</code>
+        <code>220 / 789 × 100 = 27,9 %</code>
+        <p class="res">Réduction = 220 €, soit 27,9 %</p>
+      </div>
+      <div class="corr-etape">
+        <span class="c-num">2</span>
+        <code>569 / 200 = 2,84 → 2 tranches complètes</code>
+        <code>2 × 30 = 60 €</code>
+        <p class="res">Carte-cadeau = 60 € (valable un an)</p>
+      </div>
+      <div class="corr-etape">
+        <span class="c-num">3</span>
+        <code>569 / 2 = 284,50 €</code>
+        <p class="res">2 mensualités de 284,50 €</p>
+      </div>
+      <div class="corr-etape">
+        <span class="c-num">4</span>
+        <code>569 – 499 = 70 €</code>
+        <p class="res">Le modèle proposé coûte 70 € de plus.</p>
+        <p class="conclu">Le prix de référence permet au client de vérifier la réalité de la réduction annoncée&nbsp;: c'est une information obligatoire qui évite les fausses promotions. Le client peut ainsi comparer en toute connaissance de cause.</p>
+      </div>
+    </div>
+  </div>
+</details>
+
+<!-- EX 4 -->
+<details class="exo-card">
+  <summary class="exo-header">
+    <span class="exo-num">Ex. 4</span>
+    <span class="badge badge-2">⬆⬆ intermédiaire</span>
+    <span class="exo-titre-txt">Conseiller le mode de mise à disposition le plus adapté</span>
+    <span class="chevron">▼</span>
+  </summary>
+  <div class="exo-body">
+    <div class="contexte">
+      Mme Duband (exercice 3) accepte le réfrigérateur de remplacement. Son ancien réfrigérateur est tombé en panne hier&nbsp;: elle n'a plus aucun moyen de conserver ses aliments.<br><br>
+      Connect Home propose deux modes de mise à disposition&nbsp;:<br>
+      • <strong>livraison gratuite à domicile</strong>&nbsp;: prochaine date disponible le 3 décembre (dans 8 jours)&nbsp;;<br>
+      • <strong>«&nbsp;Click &amp; Collect&nbsp;»</strong>&nbsp;: retrait gratuit sous une heure dans un magasin où le produit est en stock. Le modèle est disponible au magasin de Nevers, à 9 km de son domicile.
+    </div>
+    <div class="questions">
+      <div class="question">
+        <span class="q-num">1</span>
+        <p>Identifiez le besoin prioritaire de la cliente.</p>
+      </div>
+      <div class="question">
+        <span class="q-num">2</span>
+        <p>Indiquez le mode de mise à disposition à conseiller et justifiez votre choix.</p>
+      </div>
+      <div class="question">
+        <span class="q-num">3</span>
+        <p>Rédigez la phrase de conseil que le téléconseiller pourrait écrire dans le mail de réponse.</p>
+      </div>
+      <div class="question">
+        <span class="q-num">4</span>
+        <p>Indiquez le point à vérifier ou à signaler à la cliente avant de valider ce choix.</p>
+      </div>
+    </div>
+    <div class="ordre-grandeur"><strong>Repère&nbsp;:</strong> le conseil part toujours du besoin du client, pas de ce qui arrange l'entreprise.</div>
+    <button class="btn-corrige" onclick="toggleCorr(this)">✅ Voir la correction</button>
+    <div class="correction">
+      <div class="corr-etape">
+        <span class="c-num">1</span>
+        <p class="res">Disposer d'un réfrigérateur le plus rapidement possible (urgence).</p>
+      </div>
+      <div class="corr-etape">
+        <span class="c-num">2</span>
+        <p class="res">Le «&nbsp;Click &amp; Collect&nbsp;».</p>
+        <p>Le produit est disponible sous une heure à 9 km, contre 8 jours d'attente pour la livraison. Le délai répond à l'urgence de la cliente.</p>
+      </div>
+      <div class="corr-etape">
+        <span class="c-num">3</span>
+        <p><em>«&nbsp;Comme vous n'avez plus de réfrigérateur, je vous conseille le retrait en magasin&nbsp;: vous pourrez récupérer votre appareil sous une heure au magasin Connect Home de Nevers, à 9 km de chez vous. La livraison gratuite reste possible, mais seulement à partir du 3 décembre.&nbsp;»</em></p>
+      </div>
+      <div class="corr-etape">
+        <span class="c-num">4</span>
+        <p>Vérifier que la cliente peut transporter un réfrigérateur (véhicule adapté, aide pour le chargement), sinon lui rappeler que la livraison à domicile reste possible.</p>
+        <p class="conclu">Un conseil complet présente la meilleure solution, mais aussi ses contraintes&nbsp;: le client décide en connaissance de cause.</p>
+      </div>
+    </div>
+  </div>
+</details>
+
+<!-- ══════════════════════════════════════════════════════════
+     BLOC 2 – DROIT DE RÉTRACTATION
+══════════════════════════════════════════════════════════ -->
+<hr class="section-sep">
+<div class="bloc-titre" id="retractation">
+  <span class="icone">↩️</span>
+  <h2>Bloc 2 – Appliquer le droit de rétractation</h2>
+</div>
+
+<div class="memo">
+  <div class="memo-titre">🗂 mémo</div>
+  <code>Achat à distance (internet, téléphone, courrier) → 14 jours pour changer d'avis</code>
+  <code>Point de départ (bien) = lendemain de la réception → fin le 14e jour</code>
+  <code>Retour du produit = dans les 14 jours suivant la demande de rétractation</code>
+  <p class="note">Le client n'a pas à justifier sa décision. Le vendeur rembourse avec le même moyen de paiement (prix + frais de livraison standard). Les frais de retour sont à la charge du client s'il en a été informé. Le professionnel peut accorder un délai plus long.<br><strong>Pas de rétractation</strong> pour un achat en magasin ou sur un salon, <strong>sauf</strong> si l'achat sur le salon est financé par un crédit (14 jours).</p>
+</div>
+
+<!-- EX 5 -->
+<details class="exo-card">
+  <summary class="exo-header">
+    <span class="exo-num">Ex. 5</span>
+    <span class="badge badge-1">⬆ décollage</span>
+    <span class="exo-titre-txt">Le droit de rétractation s'applique-t-il&nbsp;?</span>
+    <span class="chevron">▼</span>
+  </summary>
+  <div class="exo-body">
+    <div class="contexte">
+      Pour chaque situation, indiquez si le client peut exercer un droit de rétractation.<br><br>
+      a) Léa achète une enceinte connectée sur le site internet de Connect Home.<br>
+      b) Hugo achète un aspirateur dans un magasin Connect Home et change d'avis le lendemain.<br>
+      c) M. et Mme Roux signent un bon de commande pour une cuisine payée comptant sur un salon de l'habitat.<br>
+      d) M. Kerbrat signe, sur le même salon, un bon de commande pour une cuisine financée par un crédit sur 24 mois.<br>
+      e) Mme Faure commande un téléviseur par téléphone auprès du service client de Connect Home.
+    </div>
+    <div class="questions">
+      <div class="question">
+        <span class="q-num">1</span>
+        <p>Répondez par oui ou non pour chaque situation et justifiez en une phrase.</p>
+      </div>
+      <div class="question">
+        <span class="q-num">2</span>
+        <p>Expliquez pourquoi le droit de rétractation protège le consommateur lors d'un achat à distance.</p>
+      </div>
+    </div>
+    <div class="ordre-grandeur"><strong>Repère&nbsp;:</strong> trois situations sur cinq ouvrent droit à la rétractation.</div>
+    <button class="btn-corrige" onclick="toggleCorr(this)">✅ Voir la correction</button>
+    <div class="correction">
+      <div class="corr-etape">
+        <span class="c-num">1</span>
+        <table class="tableau-corr">
+          <thead><tr><th>Situation</th><th>Rétractation</th><th>Justification</th></tr></thead>
+          <tbody>
+            <tr><td>a</td><td class="val">Oui</td><td>Achat à distance (internet)</td></tr>
+            <tr><td>b</td><td class="val">Non</td><td>Achat en magasin&nbsp;: pas de droit légal (sauf geste commercial de l'enseigne)</td></tr>
+            <tr><td>c</td><td class="val">Non</td><td>Achat sur un salon, payé comptant</td></tr>
+            <tr><td>d</td><td class="val">Oui</td><td>Achat sur un salon financé par un crédit&nbsp;: 14 jours</td></tr>
+            <tr><td>e</td><td class="val">Oui</td><td>Achat à distance (téléphone)</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="corr-etape">
+        <span class="c-num">2</span>
+        <p>À distance, le client ne voit pas le produit avant l'achat et il est souvent sollicité par des offres attractives (mails, démarchage téléphonique) qui poussent à l'achat impulsif. Le délai lui permet de <span class="res">revenir sur sa décision</span> après avoir eu le produit en main.</p>
+      </div>
+    </div>
+  </div>
+</details>
+
+<!-- EX 6 -->
+<details class="exo-card">
+  <summary class="exo-header">
+    <span class="exo-num">Ex. 6</span>
+    <span class="badge badge-1">⬆ décollage</span>
+    <span class="exo-titre-txt">Calculer les dates limites de rétractation et de retour</span>
+    <span class="chevron">▼</span>
+  </summary>
+  <div class="exo-body">
+    <div class="contexte">
+      M. Andriau a acheté une enceinte connectée sur le site de <strong>Connect Home</strong>. Elle lui a été livrée le <strong>25 novembre</strong>. Les conditions générales de vente de Connect Home prévoient que le client dispose de <strong>15 jours</strong> à compter de la réception pour contacter le service client (téléphone ou mail) et enregistrer sa demande de rétractation.<br><br>
+      Rappel&nbsp;: le mois de novembre compte 30 jours.
+    </div>
+    <div class="questions">
+      <div class="question">
+        <span class="q-num">1</span>
+        <p>Calculez la date limite de rétractation selon le <strong>délai légal</strong> de 14 jours.</p>
+      </div>
+      <div class="question">
+        <span class="q-num">2</span>
+        <p>Calculez la date limite selon les <strong>conditions de Connect Home</strong>. L'enseigne a-t-elle le droit de prévoir ce délai&nbsp;?</p>
+      </div>
+      <div class="question">
+        <span class="q-num">3</span>
+        <p>M. Andriau envoie sa demande de rétractation le 28 novembre. Calculez la date limite à laquelle il doit retourner le produit.</p>
+      </div>
+    </div>
+    <div class="ordre-grandeur"><strong>Ordre de grandeur&nbsp;:</strong> 25 novembre + 14 jours dépasse la fin du mois&nbsp;: toutes les dates limites tombent en décembre.</div>
+    <button class="btn-corrige" onclick="toggleCorr(this)">✅ Voir la correction</button>
+    <div class="correction">
+      <div class="corr-etape">
+        <span class="c-num">1</span>
+        <code>25 + 14 = 39 → 39 – 30 = 9</code>
+        <p class="res">Délai légal&nbsp;: jusqu'au 9 décembre.</p>
+      </div>
+      <div class="corr-etape">
+        <span class="c-num">2</span>
+        <code>25 + 15 = 40 → 40 – 30 = 10</code>
+        <p class="res">Conditions Connect Home&nbsp;: jusqu'au 10 décembre.</p>
+        <p class="conclu">Oui&nbsp;: le professionnel peut accorder un délai plus long que le délai légal, jamais un délai plus court.</p>
+      </div>
+      <div class="corr-etape">
+        <span class="c-num">3</span>
+        <code>28 + 14 = 42 → 42 – 30 = 12</code>
+        <p class="res">Retour du produit au plus tard le 12 décembre.</p>
+      </div>
+    </div>
+  </div>
+</details>
+
+<!-- EX 7 -->
+<details class="exo-card">
+  <summary class="exo-header">
+    <span class="exo-num">Ex. 7</span>
+    <span class="badge badge-2">⬆⬆ intermédiaire</span>
+    <span class="exo-titre-txt">Calculer le montant du remboursement</span>
+    <span class="chevron">▼</span>
+  </summary>
+  <div class="exo-body">
+    <div class="contexte">
+      Mme Petit a commandé sur le site de Connect Home une machine à café. Elle exerce son droit de rétractation dans les délais et renvoie la machine intacte, dans son emballage d'origine.
+    </div>
+    <table class="tableau-donnees">
+      <thead><tr><th>Élément</th><th>Montant TTC</th></tr></thead>
+      <tbody>
+        <tr><td>Prix de la machine</td><td class="num">249,00 €</td></tr>
+        <tr><td>Frais de livraison standard payés à la commande</td><td class="num">6,90 €</td></tr>
+        <tr><td>Frais d'envoi du colis retour (payés par la cliente, conformément aux CGV)</td><td class="num">11,40 €</td></tr>
+        <tr><td>Moyen de paiement utilisé à la commande</td><td class="num">carte bancaire</td></tr>
+      </tbody>
+    </table>
+    <div class="questions">
+      <div class="question">
+        <span class="q-num">1</span>
+        <p>Calculez le montant que Connect Home doit rembourser à Mme Petit.</p>
+      </div>
+      <div class="question">
+        <span class="q-num">2</span>
+        <p>Calculez le coût final de cette opération pour la cliente.</p>
+      </div>
+      <div class="question">
+        <span class="q-num">3</span>
+        <p>Précisez le moyen de remboursement. Indiquez la solution qui aurait permis à la cliente de ne supporter aucun frais de retour.</p>
+      </div>
+    </div>
+    <div class="ordre-grandeur"><strong>Ordre de grandeur&nbsp;:</strong> le remboursement est un peu supérieur au prix de la machine&nbsp;; le coût pour la cliente est d'une dizaine d'euros.</div>
+    <button class="btn-corrige" onclick="toggleCorr(this)">✅ Voir la correction</button>
+    <div class="correction">
+      <div class="corr-etape">
+        <span class="c-num">1</span>
+        <code>249,00 + 6,90 = 255,90 €</code>
+        <p class="res">Remboursement = 255,90 €</p>
+        <p class="conclu">Le vendeur rembourse le prix et les frais de livraison standard.</p>
+      </div>
+      <div class="corr-etape">
+        <span class="c-num">2</span>
+        <p class="res">Coût pour la cliente = 11,40 € (frais de retour)</p>
+      </div>
+      <div class="corr-etape">
+        <span class="c-num">3</span>
+        <p>Remboursement sur sa <span class="res">carte bancaire</span> (même moyen de paiement que l'achat). Elle aurait pu rapporter la machine dans un magasin Connect Home, sans frais.</p>
+      </div>
+    </div>
+  </div>
+</details>
+
+<!-- EX 8 -->
+<details class="exo-card">
+  <summary class="exo-header">
+    <span class="exo-num">Ex. 8</span>
+    <span class="badge badge-3">⬆⬆⬆ niveau examen</span>
+    <span class="exo-titre-txt">Rédiger le mail de réponse à une demande de rétractation</span>
+    <span class="chevron">▼</span>
+  </summary>
+  <div class="exo-body">
+    <div class="contexte">
+      Le 28 novembre, le service client de Connect Home reçoit ce mail&nbsp;:<br><br>
+      <em>«&nbsp;Bonjour, j'ai acheté sur votre site une enceinte Google Home, livrée le 25 novembre. Elle ne me convient pas, je souhaite la retourner. Comment faire&nbsp;? Éric Andriau – eric.andriau@gmail.com&nbsp;»</em><br><br>
+      <strong>Procédure Connect Home&nbsp;:</strong><br>
+      • demande de rétractation par téléphone (03 80 51 45 54) ou par mail, dans les 15 jours suivant la réception&nbsp;; confirmation envoyée par mail&nbsp;;<br>
+      • produit retourné intact, sans trace d'utilisation, dans son emballage d'origine, dans les 14 jours suivant l'enregistrement de la demande&nbsp;;<br>
+      • adresse&nbsp;: SAV Connect Home – Centre de retours – 87 avenue Pierre-de-Coubertin – 69100 Villeurbanne&nbsp;;<br>
+      • frais de retour à la charge du client (assurance du colis conseillée)&nbsp;; retour gratuit possible en magasin&nbsp;;<br>
+      • remboursement avec le même moyen de paiement que l'achat.
+    </div>
+    <div class="questions">
+      <div class="question">
+        <span class="q-num">1</span>
+        <p>Rédigez le mail de réponse à M. Andriau. Il doit comporter&nbsp;: des salutations personnalisées, le rappel du contexte, les deux conditions de reprise avec les dates, les modalités de retour, les modalités de remboursement et une prise de congé.</p>
+      </div>
+    </div>
+    <div class="ordre-grandeur"><strong>Repère&nbsp;:</strong> utilisez les dates calculées à l'exercice 6 (demande au plus tard le 10 décembre). Un mail professionnel tient en une quinzaine de lignes.</div>
+    <button class="btn-corrige" onclick="toggleCorr(this)">✅ Voir la correction</button>
+    <div class="correction">
+      <div class="corr-etape">
+        <span class="c-num">1</span>
+        <p><strong>Objet&nbsp;:</strong> Re&nbsp;: Retour produit</p>
+        <p>Bonjour M. Andriau,</p>
+        <p>Nous avons pris connaissance de votre mail du 28 novembre concernant le retour de l'enceinte Google Home achetée sur notre site et livrée le 25 novembre.</p>
+        <p>Pour exercer votre droit de rétractation, deux conditions doivent être remplies&nbsp;:<br>
+        – contacter notre service client par téléphone au 03 80 51 45 54 ou par mail, au plus tard le 10 décembre&nbsp;; votre demande vous sera confirmée par mail&nbsp;;<br>
+        – retourner le produit intact, sans trace d'utilisation, dans son emballage d'origine.</p>
+        <p>Vous disposez de 14 jours à compter de l'enregistrement de votre demande pour retourner l'article à l'adresse suivante&nbsp;: SAV Connect Home – Centre de retours – 87 avenue Pierre-de-Coubertin – 69100 Villeurbanne. Les frais de retour restent à votre charge&nbsp;; nous vous conseillons d'assurer le colis. Vous pouvez aussi rapporter l'article dans l'un de nos magasins, sans frais.</p>
+        <p>Le remboursement sera effectué avec le moyen de paiement utilisé lors de l'achat.</p>
+        <p>Nous restons à votre disposition pour toute question.</p>
+        <p>Bien cordialement,<br>Prénom Nom – Conseiller Connect Home, service retours</p>
+        <p class="conclu">Points de vigilance&nbsp;: dates exactes, ton courtois, aucune demande de justification du motif (le client n'a pas à se justifier).</p>
+      </div>
+    </div>
+  </div>
+</details>
+
+<!-- EX 9 -->
+<details class="exo-card">
+  <summary class="exo-header">
+    <span class="exo-num">Ex. 9</span>
+    <span class="badge badge-3">⬆⬆⬆ niveau examen</span>
+    <span class="exo-titre-txt">Informer les clients sur un salon de l'habitat</span>
+    <span class="chevron">▼</span>
+  </summary>
+  <div class="exo-body">
+    <div class="contexte">
+      Vous travaillez sur le stand <strong>Schmidt</strong> (cuisines) au salon de l'habitat de Vannes. Le premier jour du salon, le <strong>16 novembre</strong>, deux couples posent une question&nbsp;:<br><br>
+      <strong>Couple A</strong>&nbsp;: «&nbsp;Nous aimons le modèle Wild Black en promotion pour le salon, mais le modèle Hybrid nous plaît aussi. Si nous signons aujourd'hui pour le Wild Black, pourrons-nous changer d'avis&nbsp;?&nbsp;» (paiement comptant)<br><br>
+      <strong>Couple B</strong>&nbsp;: «&nbsp;Nous choisissons la cuisine Major avec votre solution de financement sur 24 mois. Pourrons-nous nous rétracter si nous changeons d'avis&nbsp;?&nbsp;»
+    </div>
+    <div class="questions">
+      <div class="question">
+        <span class="q-num">1</span>
+        <p>Indiquez pour chaque couple si le droit de rétractation s'applique, puis rédigez la réponse écrite qui figurera sur la note remise avec le bon de commande.</p>
+      </div>
+      <div class="question">
+        <span class="q-num">2</span>
+        <p>Calculez la date limite de rétractation du couple B (le délai court à partir de la signature de l'offre de crédit, le 16 novembre).</p>
+      </div>
+      <div class="question">
+        <span class="q-num">3</span>
+        <p>Rédigez le texte de l'affiche destinée à informer les visiteurs du stand sur les conditions du droit de rétractation (deux phrases maximum).</p>
+      </div>
+      <div class="question">
+        <span class="q-num">4</span>
+        <p>Indiquez le format minimal et la taille de caractères minimale exigés pour cette affiche, et expliquez pourquoi la loi impose cet affichage.</p>
+      </div>
+    </div>
+    <div class="ordre-grandeur"><strong>Repère&nbsp;:</strong> 16 + 14 jours tombe encore en novembre. L'affichage obligatoire est en format A3 minimum, caractères de taille 90 minimum.</div>
+    <button class="btn-corrige" onclick="toggleCorr(this)">✅ Voir la correction</button>
+    <div class="correction">
+      <div class="corr-etape">
+        <span class="c-num">1</span>
+        <p><strong>Couple A – non&nbsp;:</strong> <em>«&nbsp;Le droit de rétractation de 14 jours ne s'applique pas aux achats réalisés sur un salon&nbsp;: une fois le bon de commande signé, vous ne pourrez pas changer d'avis.&nbsp;»</em></p>
+        <p><strong>Couple B – oui&nbsp;:</strong> <em>«&nbsp;Votre achat étant financé par un crédit, vous disposez d'un droit de rétractation de 14 jours à compter d'aujourd'hui.&nbsp;»</em></p>
+      </div>
+      <div class="corr-etape">
+        <span class="c-num">2</span>
+        <code>16 + 14 = 30</code>
+        <p class="res">Le couple B peut se rétracter jusqu'au 30 novembre.</p>
+      </div>
+      <div class="corr-etape">
+        <span class="c-num">3</span>
+        <p><em>«&nbsp;Le droit de rétractation ne s'applique pas aux achats effectués sur le stand Schmidt du salon de l'habitat de Vannes. Seuls les achats financés par un crédit bénéficient d'un délai de rétractation de 14 jours.&nbsp;»</em></p>
+      </div>
+      <div class="corr-etape">
+        <span class="c-num">4</span>
+        <p class="res">Format A3 minimum, caractères de taille 90 minimum.</p>
+        <p class="conclu">Sur un salon, le client pense souvent pouvoir changer d'avis comme sur internet. L'affiche, visible et lisible, garantit qu'il est informé avant de signer.</p>
+      </div>
+    </div>
+  </div>
+</details>
+
+<!-- ══════════════════════════════════════════════════════════
+     BLOC 3 – GARANTIES ET LITIGES
+══════════════════════════════════════════════════════════ -->
+<hr class="section-sep">
+<div class="bloc-titre" id="garanties">
+  <span class="icone">🛡️</span>
+  <h2>Bloc 3 – Apporter des solutions conformes et gérer les litiges</h2>
+</div>
+
+<div class="memo">
+  <div class="memo-titre">🗂 mémo</div>
+  <code>Garantie légale de conformité&nbsp;: obligatoire, gratuite, 2 ans à compter de la livraison</code>
+  <code>Garantie légale des vices cachés&nbsp;: obligatoire, 2 ans à compter de la découverte du vice</code>
+  <code>Garantie commerciale&nbsp;: facultative, gratuite ou payante (extension), contenu fixé par contrat</code>
+  <p class="note">Conformité&nbsp;: défaut présent à la livraison, le client n'a pas à le prouver pendant 2 ans. Vices cachés&nbsp;: 3 conditions – défaut caché, existant à la date d'achat, rendant le produit inutilisable ou fortement diminué. <strong>Aucune garantie</strong> ne couvre une cause extérieure au produit (chute, foudre, mauvaise utilisation).<br>Litige&nbsp;: réclamation → solution amiable refusée → courrier au service litiges de l'enseigne → réponse → si désaccord, <strong>médiateur de la consommation</strong>. Une association de consommateurs peut accompagner le client et engager une <strong>action de groupe</strong> si plusieurs consommateurs subissent le même préjudice causé par le même professionnel.</p>
+</div>
+
+<!-- EX 10 -->
+<details class="exo-card">
+  <summary class="exo-header">
+    <span class="exo-num">Ex. 10</span>
+    <span class="badge badge-1">⬆ décollage</span>
+    <span class="exo-titre-txt">Comparer les trois garanties</span>
+    <span class="chevron">▼</span>
+  </summary>
+  <div class="exo-body">
+    <div class="contexte">
+      Un nouveau téléconseiller de Connect Home vous demande un tableau récapitulatif des garanties pour l'aider à traiter les appels.
+    </div>
+    <div class="questions">
+      <div class="question">
+        <span class="q-num">1</span>
+        <p>Construisez un tableau comparant la garantie de conformité, la garantie des vices cachés et la garantie commerciale selon quatre critères&nbsp;: obligatoire ou facultative&nbsp;; gratuite ou payante&nbsp;; durée&nbsp;; ce qu'elle couvre.</p>
+      </div>
+      <div class="question">
+        <span class="q-num">2</span>
+        <p>Citez les trois solutions qu'une garantie peut apporter au client.</p>
+      </div>
+      <div class="question">
+        <span class="q-num">3</span>
+        <p>Vrai ou faux&nbsp;? Justifiez.<br>a) La garantie commerciale est toujours payante.<br>b) Les garanties obligatoires sont la garantie de conformité et la garantie des vices cachés.<br>c) La garantie commerciale remplace la garantie légale de conformité.</p>
+      </div>
+    </div>
+    <div class="ordre-grandeur"><strong>Repère&nbsp;:</strong> deux garanties sont «&nbsp;légales&nbsp;» (imposées par la loi), une est «&nbsp;contractuelle&nbsp;» (proposée par le vendeur ou le fabricant).</div>
+    <button class="btn-corrige" onclick="toggleCorr(this)">✅ Voir la correction</button>
+    <div class="correction">
+      <div class="corr-etape">
+        <span class="c-num">1</span>
+        <table class="tableau-corr">
+          <thead><tr><th>Critère</th><th>Conformité</th><th>Vices cachés</th><th>Commerciale</th></tr></thead>
+          <tbody>
+            <tr><td>Caractère</td><td class="val">Obligatoire</td><td class="val">Obligatoire</td><td class="val">Facultative</td></tr>
+            <tr><td>Coût</td><td>Gratuite</td><td>Gratuite</td><td>Gratuite ou payante (extension)</td></tr>
+            <tr><td>Durée</td><td>2 ans à compter de la livraison</td><td>2 ans à compter de la découverte du vice</td><td>Fixée librement par contrat</td></tr>
+            <tr><td>Couvre</td><td>Défaut existant à la livraison, sans preuve à apporter</td><td>Défaut caché, existant à l'achat, rendant le produit inutilisable</td><td>Ce que prévoit le contrat (pièces, main-d'œuvre, prêt…)</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="corr-etape">
+        <span class="c-num">2</span>
+        <p class="res">Réparer, remplacer ou rembourser le produit.</p>
+      </div>
+      <div class="corr-etape">
+        <span class="c-num">3</span>
+        <p>a) <strong>Faux</strong>&nbsp;: elle peut être gratuite ou payante.<br>b) <strong>Vrai</strong>&nbsp;: elles sont imposées par la loi.<br>c) <strong>Faux</strong>&nbsp;: elle s'ajoute aux garanties légales, elle ne les supprime pas.</p>
+      </div>
+    </div>
+  </div>
+</details>
+
+<!-- EX 11 -->
+<details class="exo-card">
+  <summary class="exo-header">
+    <span class="exo-num">Ex. 11</span>
+    <span class="badge badge-2">⬆⬆ intermédiaire</span>
+    <span class="exo-titre-txt">Une garantie peut-elle être mise en œuvre&nbsp;?</span>
+    <span class="chevron">▼</span>
+  </summary>
+  <div class="exo-body">
+    <div class="contexte">
+      Le service réclamations de Connect Home a enregistré les demandes suivantes. Tous les produits ont été vendus avec la garantie commerciale gratuite de 2 ans, sauf mention contraire.<br><br>
+      <strong>1.</strong> Aspirateur sans sac acheté 299 € le mois dernier&nbsp;: il fonctionne une fois sur deux. Le client a son ticket.<br>
+      <strong>2.</strong> Téléviseur acheté il y a 3 ans, endommagé par la foudre lors d'un orage.<br>
+      <strong>3.</strong> Sèche-linge acheté il y a un an&nbsp;: bruit anormal depuis quelques semaines&nbsp;; un réparateur indique un problème mécanique récurrent sur cette série.<br>
+      <strong>4.</strong> Sorbetière offerte il y a 6 mois&nbsp;: elle n'a jamais bien fonctionné.<br>
+      <strong>5.</strong> Ordinateur portable sous extension de garantie de 3 ans (facture conservée)&nbsp;: il ne s'allume plus après une chute.
+    </div>
+    <div class="questions">
+      <div class="question">
+        <span class="q-num">1</span>
+        <p>Pour chaque demande, indiquez la garantie envisagée, si elle peut être mise en œuvre (oui / non) et justifiez.</p>
+      </div>
+    </div>
+    <div class="ordre-grandeur"><strong>Repère&nbsp;:</strong> commencez par vous demander si la panne vient du produit lui-même ou d'une cause extérieure. Deux demandes sur cinq sont refusées.</div>
+    <button class="btn-corrige" onclick="toggleCorr(this)">✅ Voir la correction</button>
+    <div class="correction">
+      <div class="corr-etape">
+        <span class="c-num">1</span>
+        <table class="tableau-corr">
+          <thead><tr><th>N°</th><th>Garantie</th><th>Oui / non</th><th>Justification</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td>Conformité (ou commerciale)</td><td class="val">Oui</td><td>Défaut présent dès la livraison, moins de 2 ans&nbsp;; produit aussi sous garantie commerciale avec preuve d'achat.</td></tr>
+            <tr><td>2</td><td>Commerciale</td><td class="val">Non</td><td>Cause extérieure (foudre) et produit acheté il y a plus de 2 ans.</td></tr>
+            <tr><td>3</td><td>Vices cachés</td><td class="val">Oui</td><td>Défaut caché, existant à l'achat (problème de série), qui diminue fortement l'usage.</td></tr>
+            <tr><td>4</td><td>Conformité</td><td class="val">Oui</td><td>Défaut existant dès l'origine, moins de 2 ans après la livraison.</td></tr>
+            <tr><td>5</td><td>Commerciale</td><td class="val">Non</td><td>Dommage dû à une cause extérieure (chute), non couvert même sous garantie.</td></tr>
+          </tbody>
+        </table>
+        <p class="conclu">Une garantie couvre un défaut du produit, jamais un accident ou une mauvaise utilisation.</p>
+      </div>
+    </div>
+  </div>
+</details>
+
+<!-- EX 12 -->
+<details class="exo-card">
+  <summary class="exo-header">
+    <span class="exo-num">Ex. 12</span>
+    <span class="badge badge-2">⬆⬆ intermédiaire</span>
+    <span class="exo-titre-txt">Appliquer les garanties commerciales d'une concession automobile</span>
+    <span class="chevron">▼</span>
+  </summary>
+  <div class="exo-body">
+    <div class="contexte">
+      Vous êtes conseiller dans une concession <strong>Renault</strong>. Voici les garanties commerciales proposées&nbsp;:
+    </div>
+    <table class="tableau-donnees">
+      <thead><tr><th>Garantie</th><th>Durée</th><th>Contenu</th><th>Prix</th></tr></thead>
+      <tbody>
+        <tr><td>Garantie constructeur</td><td class="num">2 ans</td><td>Pièces et main-d'œuvre en cas de panne</td><td>Incluse</td></tr>
+        <tr><td>Garantie peinture</td><td class="num">3 ans</td><td>Défauts de peinture, après expertise</td><td>Incluse</td></tr>
+        <tr><td>Garantie pare-brise</td><td class="num">À vie</td><td>Remplacement du pare-brise dans le réseau Renault</td><td>Incluse</td></tr>
+        <tr><td>Contrat Losange (extension)</td><td class="num">Jusqu'à 5 ans</td><td>Pièces, main-d'œuvre, assistance 24 h/24 et 7 j/7, véhicule de remplacement si immobilisation de plus de 3 heures</td><td>Payant</td></tr>
+      </tbody>
+    </table>
+    <div class="contexte">
+      <strong>Mme Notha</strong>&nbsp;: pare-brise de sa Twingo fissuré.<br>
+      <strong>M. Parin</strong>&nbsp;: Kadjar acheté il y a 3 ans et demi, problèmes à l'accélération, pas d'extension.<br>
+      <strong>Mme Jouay</strong>&nbsp;: Koleos acheté il y a 3 ans et demi, ne démarre plus&nbsp;; a souscrit le contrat Losange. Réparation prévue&nbsp;: 5 heures.<br>
+      <strong>M. Duplex</strong>&nbsp;: Captur acheté il y a 2 ans et demi, la peinture s'écaille par endroits.
+    </div>
+    <div class="questions">
+      <div class="question">
+        <span class="q-num">1</span>
+        <p>Pour chaque client, indiquez si une garantie s'applique, laquelle, et rédigez la réponse écrite à lui transmettre.</p>
+      </div>
+      <div class="question">
+        <span class="q-num">2</span>
+        <p>Expliquez l'intérêt de l'extension de garantie pour la concession, puis pour le client.</p>
+      </div>
+    </div>
+    <div class="ordre-grandeur"><strong>Repère&nbsp;:</strong> comparez l'âge de chaque véhicule à la durée de chaque garantie. Un seul client devra payer sa réparation.</div>
+    <button class="btn-corrige" onclick="toggleCorr(this)">✅ Voir la correction</button>
+    <div class="correction">
+      <div class="corr-etape">
+        <span class="c-num">1</span>
+        <table class="tableau-corr">
+          <thead><tr><th>Client</th><th>Garantie</th><th>Réponse</th></tr></thead>
+          <tbody>
+            <tr><td>Mme Notha</td><td class="val">Oui – pare-brise</td><td>«&nbsp;Le remplacement de votre pare-brise est garanti à vie dans tout le réseau Renault.&nbsp;»</td></tr>
+            <tr><td>M. Parin</td><td class="val">Non</td><td>«&nbsp;Votre véhicule n'est plus couvert par la garantie constructeur depuis un an et demi. Nous pouvons réaliser la réparation, mais elle sera à votre charge.&nbsp;»</td></tr>
+            <tr><td>Mme Jouay</td><td class="val">Oui – contrat Losange</td><td>«&nbsp;Grâce au contrat Losange, la réparation ne vous coûtera rien. L'immobilisation dépassant 3 heures, un véhicule de remplacement vous est prêté.&nbsp;»</td></tr>
+            <tr><td>M. Duplex</td><td class="val">Oui – peinture</td><td>«&nbsp;Votre véhicule a moins de 3 ans&nbsp;: la peinture pourra être prise en charge par la garantie peinture après expertise de nos spécialistes.&nbsp;»</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="corr-etape">
+        <span class="c-num">2</span>
+        <p><strong>Concession&nbsp;:</strong> chiffre d'affaires supplémentaire (prestation payante) et fidélisation du client, qui revient à l'atelier.<br><strong>Client&nbsp;:</strong> réparations prises en charge après la garantie constructeur, assistance permanente, véhicule de remplacement, tranquillité d'esprit.</p>
+      </div>
+    </div>
+  </div>
+</details>
+
+<!-- EX 13 -->
+<details class="exo-card">
+  <summary class="exo-header">
+    <span class="exo-num">Ex. 13</span>
+    <span class="badge badge-3">⬆⬆⬆ niveau examen</span>
+    <span class="exo-titre-txt">Réclamation fondée ou litige&nbsp;? Choisir la procédure</span>
+    <span class="chevron">▼</span>
+  </summary>
+  <div class="exo-body">
+    <div class="contexte">
+      Le service réclamations de Connect Home reçoit trois messages écrits&nbsp;:<br><br>
+      <strong>A.</strong> «&nbsp;Il y a 3 ans, j'ai acheté un fauteuil massant. Il ne fonctionne plus alors que je l'ai très peu utilisé. Il n'est plus sous garantie, mais il serait normal que vous payiez la réparation.&nbsp;»<br><br>
+      <strong>B.</strong> «&nbsp;J'ai acheté une bouilloire à 29 € en début de semaine. Quand je la mets en marche, elle s'éteint toute seule au bout de quelques secondes.&nbsp;»<br><br>
+      <strong>C.</strong> «&nbsp;J'ai acheté sur votre site un robot aspirateur qui ne fonctionnait plus au bout de 15 jours. Le SAV m'a répondu que j'étais responsable de la panne car je n'aurais pas suivi le mode d'emploi, ce qui est faux. J'ai écrit au service réclamations et vous me proposez un chèque-cadeau de 20 €. C'est inacceptable&nbsp;!&nbsp;»<br><br>
+      <strong>Procédure litige Connect Home&nbsp;:</strong> le client écrit au service Litiges – TSA 90016 – 93145 Bondy&nbsp;; réponse sous 10 jours.
+    </div>
+    <div class="questions">
+      <div class="question">
+        <span class="q-num">1</span>
+        <p>Pour chaque message, indiquez si la réclamation est fondée ou non fondée, la procédure à mettre en œuvre et votre justification.</p>
+      </div>
+      <div class="question">
+        <span class="q-num">2</span>
+        <p>Pour la bouilloire, expliquez pourquoi l'échange est préférable à la réparation.</p>
+      </div>
+      <div class="question">
+        <span class="q-num">3</span>
+        <p>Expliquez à partir de quel moment une réclamation devient un litige.</p>
+      </div>
+    </div>
+    <div class="ordre-grandeur"><strong>Repère&nbsp;:</strong> un litige suppose qu'une première solution amiable a été proposée… et refusée.</div>
+    <button class="btn-corrige" onclick="toggleCorr(this)">✅ Voir la correction</button>
+    <div class="correction">
+      <div class="corr-etape">
+        <span class="c-num">1</span>
+        <table class="tableau-corr">
+          <thead><tr><th>Message</th><th>Réclamation</th><th>Procédure</th><th>Justification</th></tr></thead>
+          <tbody>
+            <tr><td>A</td><td class="val">Non fondée</td><td>Réponse écrite négative argumentée</td><td>Produit hors garantie&nbsp;: la réparation ne peut être prise en charge.</td></tr>
+            <tr><td>B</td><td class="val">Fondée</td><td>Mise en œuvre de la garantie&nbsp;: échange</td><td>Produit acheté récemment, défaut existant dès l'origine.</td></tr>
+            <tr><td>C</td><td class="val">Fondée</td><td>Ouverture d'un dossier litige&nbsp;: courrier au service Litiges de Bondy, réponse sous 10 jours</td><td>La solution amiable (chèque-cadeau) n'a pas satisfait la cliente.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="corr-etape">
+        <span class="c-num">2</span>
+        <p>Pour un petit électroménager à 29 €, le coût de la réparation (pièces, main-d'œuvre, transport) dépasserait la valeur du produit. L'échange est plus rapide pour le client et moins coûteux pour l'enseigne.</p>
+      </div>
+      <div class="corr-etape">
+        <span class="c-num">3</span>
+        <p>Une réclamation devient un <span class="res">litige</span> lorsque la réponse ou la solution amiable proposée ne satisfait pas le client, ou lorsque la réclamation n'est pas traitée.</p>
+      </div>
+    </div>
+  </div>
+</details>
+
+<!-- EX 14 -->
+<details class="exo-card">
+  <summary class="exo-header">
+    <span class="exo-num">Ex. 14</span>
+    <span class="badge badge-3">⬆⬆⬆ niveau examen</span>
+    <span class="exo-titre-txt">Voies de recours&nbsp;: médiateur, association et action de groupe</span>
+    <span class="chevron">▼</span>
+  </summary>
+  <div class="exo-body">
+    <div class="contexte">
+      <strong>Partie A.</strong> Les étapes de la gestion d'un litige sont présentées dans le désordre&nbsp;:<br>
+      a) Le service litiges de l'enseigne envoie sa réponse.<br>
+      b) Le client refuse la solution amiable proposée par le service réclamations.<br>
+      c) Le client, toujours insatisfait, écrit au médiateur de la consommation.<br>
+      d) Le client écrit au service litiges de l'enseigne pour ouvrir un dossier.<br><br>
+      <strong>Partie B.</strong> Mme Dornier constate que son fournisseur d'accès à internet lui facture chaque mois 4,90 € pour une option qu'elle n'a jamais demandée. Ses réclamations restent sans réponse. Son voisin, M. Martin, client du même fournisseur, subit exactement le même problème. Mme Dornier contacte une association de défense des consommateurs agréée.
+    </div>
+    <div class="questions">
+      <div class="question">
+        <span class="q-num">1</span>
+        <p>Remettez les étapes a à d dans l'ordre.</p>
+      </div>
+      <div class="question">
+        <span class="q-num">2</span>
+        <p>Indiquez le rôle du médiateur de la consommation. Vrai ou faux&nbsp;: «&nbsp;Un médiateur peut être saisi pour accélérer la mise en œuvre d'une garantie.&nbsp;»</p>
+      </div>
+      <div class="question">
+        <span class="q-num">3</span>
+        <p>Calculez le montant facturé à tort à Mme Dornier si l'option lui est facturée depuis 14 mois.</p>
+      </div>
+      <div class="question">
+        <span class="q-num">4</span>
+        <p>Indiquez l'aide que l'association peut apporter à Mme Dornier, puis l'action en justice qu'elle peut engager. Justifiez.</p>
+      </div>
+    </div>
+    <div class="ordre-grandeur"><strong>Ordre de grandeur&nbsp;:</strong> environ 5 € × 14 mois, soit un peu moins de 70 €.</div>
+    <button class="btn-corrige" onclick="toggleCorr(this)">✅ Voir la correction</button>
+    <div class="correction">
+      <div class="corr-etape">
+        <span class="c-num">1</span>
+        <p class="res">b → d → a → c</p>
+      </div>
+      <div class="corr-etape">
+        <span class="c-num">2</span>
+        <p>Le médiateur est un tiers indépendant chargé de rechercher un accord amiable entre le client et l'entreprise. C'est une voie de recours qui intervient après l'échec des démarches auprès de l'enseigne.</p>
+        <p class="res">Faux.</p>
+        <p class="conclu">Le médiateur intervient pour régler un litige, pas pour accélérer une garantie en cours de traitement.</p>
+      </div>
+      <div class="corr-etape">
+        <span class="c-num">3</span>
+        <code>4,90 × 14 = 68,60 €</code>
+        <p class="res">Montant facturé à tort = 68,60 €</p>
+      </div>
+      <div class="corr-etape">
+        <span class="c-num">4</span>
+        <p><strong>Aide&nbsp;:</strong> l'association conseille Mme Dornier et l'accompagne dans une démarche de médiation avec le fournisseur.</p>
+        <p><strong>Action en justice&nbsp;:</strong> une <span class="res">action de groupe</span>, car au moins deux consommateurs (Mme Dornier et M. Martin) subissent le même préjudice causé par le même professionnel. L'action collective permet d'agir ensemble contre une entreprise qui ne respecte pas la réglementation.</p>
+      </div>
+    </div>
+  </div>
+</details>
+
+<!-- EX 15 -->
+<details class="exo-card">
+  <summary class="exo-header">
+    <span class="exo-num">Ex. 15</span>
+    <span class="badge badge-exam">🏁 sujet complet</span>
+    <span class="exo-titre-txt">Étude de cas – une journée au service retours de Connect Home</span>
+    <span class="chevron">▼</span>
+  </summary>
+  <div class="exo-body">
+    <div class="contexte">
+      Le <strong>4 décembre</strong>, vous traitez quatre dossiers au service retours et réclamations de Connect Home.<br><br>
+      <strong>Dossier 1.</strong> M. Garnier a acheté sur le site un casque audio à <strong>179 €</strong> (livraison standard <strong>5,90 €</strong>), reçu le <strong>22 novembre</strong>. Il l'a essayé, il ne lui plaît pas&nbsp;; il souhaite le renvoyer. Le casque est intact, dans son emballage.<br><br>
+      <strong>Dossier 2.</strong> Mme Lopez a acheté un four à <strong>449 €</strong> en magasin il y a 14 mois. Depuis la livraison, la porte ne ferme pas correctement et la cuisson est irrégulière. Elle n'a pas souscrit d'extension (garantie commerciale gratuite de 1 an).<br><br>
+      <strong>Dossier 3.</strong> M. Benali a acheté un téléviseur en magasin il y a 3 semaines. Il veut le rendre car il a trouvé moins cher ailleurs. Il pense bénéficier d'un délai de rétractation.<br><br>
+      <strong>Dossier 4.</strong> Mme Colin a renvoyé une tablette défectueuse il y a un mois. Le service réclamations lui a proposé un avoir de 30 € au lieu du remboursement de 329 € qu'elle demandait. Elle refuse et menace de «&nbsp;porter plainte&nbsp;».
+    </div>
+    <div class="questions">
+      <div class="question">
+        <span class="q-num">1</span>
+        <p>Dossier 1 – Calculez la date limite légale de rétractation. M. Garnier est-il encore dans les délais&nbsp;? Calculez le montant qui lui sera remboursé et précisez s'il doit justifier sa décision.</p>
+      </div>
+      <div class="question">
+        <span class="q-num">2</span>
+        <p>Dossier 2 – Identifiez la garantie applicable et justifiez. Précisez si Mme Lopez doit prouver que le défaut existait à la livraison.</p>
+      </div>
+      <div class="question">
+        <span class="q-num">3</span>
+        <p>Dossier 3 – Indiquez si la demande est recevable et formulez la réponse écrite à adresser au client.</p>
+      </div>
+      <div class="question">
+        <span class="q-num">4</span>
+        <p>Dossier 4 – Qualifiez la situation, puis présentez les étapes que Mme Colin peut suivre, dans l'ordre, avant d'envisager la justice.</p>
+      </div>
+      <div class="question">
+        <span class="q-num">5</span>
+        <p>Proposez deux actions que Connect Home pourrait mettre en place pour réduire le nombre de réclamations liées au droit de rétractation et aux garanties.</p>
+      </div>
+    </div>
+    <div class="ordre-grandeur"><strong>Ordre de grandeur&nbsp;:</strong> 22 novembre + 14 jours tombe début décembre. Le remboursement du dossier 1 est proche de 185 €.</div>
+    <button class="btn-corrige" onclick="toggleCorr(this)">✅ Voir la correction</button>
+    <div class="correction">
+      <div class="corr-etape">
+        <span class="c-num">1</span>
+        <code>22 + 14 = 36 → 36 – 30 = 6 décembre</code>
+        <p class="res">Date limite&nbsp;: 6 décembre. Le 4 décembre, M. Garnier est dans les délais.</p>
+        <code>179 + 5,90 = 184,90 €</code>
+        <p class="res">Remboursement = 184,90 € (même moyen de paiement)</p>
+        <p class="conclu">Il n'a pas à justifier sa décision. Il doit retourner le casque dans les 14 jours suivant sa demande&nbsp;; les frais de retour sont à sa charge s'il en a été informé.</p>
+      </div>
+      <div class="corr-etape">
+        <span class="c-num">2</span>
+        <p class="res">Garantie légale de conformité.</p>
+        <p>Le défaut existe depuis la livraison et le four a moins de 2 ans. La garantie commerciale d'un an est expirée, mais elle ne supprime pas la garantie légale.</p>
+        <p class="conclu">Non&nbsp;: pendant 2 ans, le défaut est présumé exister à la livraison&nbsp;; Mme Lopez n'a pas à le prouver.</p>
+      </div>
+      <div class="corr-etape">
+        <span class="c-num">3</span>
+        <p class="res">Demande non recevable.</p>
+        <p><em>«&nbsp;Monsieur, le droit de rétractation de 14 jours concerne uniquement les achats à distance. Votre téléviseur ayant été acheté en magasin, nous ne pouvons pas le reprendre à ce titre. Nous restons à votre disposition pour toute question sur votre appareil.&nbsp;»</em></p>
+      </div>
+      <div class="corr-etape">
+        <span class="c-num">4</span>
+        <p>La solution amiable (avoir de 30 €) a été refusée&nbsp;: il s'agit d'un <span class="res">litige</span>.</p>
+        <p>1) Courrier au service litiges de Connect Home pour ouvrir un dossier&nbsp;; 2) réponse du service litiges&nbsp;; 3) si elle ne la satisfait pas, saisine du médiateur de la consommation&nbsp;; 4) elle peut se faire accompagner par une association de consommateurs.</p>
+      </div>
+      <div class="corr-etape">
+        <span class="c-num">5</span>
+        <p>Exemples&nbsp;: afficher clairement en magasin et sur le site les conditions de rétractation et de garantie&nbsp;; former les vendeurs à présenter les garanties au moment de la vente&nbsp;; ajouter une fiche «&nbsp;vos droits&nbsp;» dans les colis&nbsp;; proposer l'extension de garantie lors de l'achat de produits coûteux.</p>
+        <p class="conclu">Un client bien informé avant l'achat réclame moins et garde confiance dans l'enseigne.</p>
+      </div>
+    </div>
+  </div>
+</details>
+
+</main>
+
+<footer class="site-footer">
+  Bac pro Métiers du commerce et de la vente – Bloc 2 «&nbsp;Suivre les ventes&nbsp;» – Traiter les retours et les réclamations du client · Protection du consommateur et contentieux
+</footer>
+
+<script>
+function toggleCorr(btn) {
+  const corr = btn.nextElementSibling;
+  const isVisible = corr.classList.contains('visible');
+  corr.classList.toggle('visible', !isVisible);
+  btn.textContent = isVisible ? '✅ Voir la correction' : '🔒 Masquer la correction';
+}
+</script>
+</body>
+</html>
